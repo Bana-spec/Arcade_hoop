@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Arcade Hoops"
+description = "An original 3D arcade basketball game for private online 1v1 matches with seven distinct athletes, skill-based shots, and Zone powers."
+version = "1.0.0"
+id = "artifacts/arcade-hoops"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24065
+
+[services.development]
+run = "pnpm --filter @workspace/arcade-hoops run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/arcade-hoops", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/arcade-hoops/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24065"
+BASE_PATH = "/"
